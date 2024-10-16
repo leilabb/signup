@@ -1,11 +1,11 @@
 {
   "name": "signup",
   "version": "1.0.0",
-  "type": "module",
+  "type": "commonjs",
   "description": "",
-  "main": "index.js",
+  "main": "server.cjs",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "devStart": "nodemon server.cjs"
   },
   "keywords": [],
   "author": "",
