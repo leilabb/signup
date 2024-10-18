@@ -1,0 +1,27 @@
+input[type="text"] {
+  width: 30%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border-radius: 20px;
+  border: 1px solid black;
+}
+
+h1 {
+  font-size: 34px;
+  font-family: sans-serif;
+}
+
+p {
+  font-family: sans-serif;
+}
+
+button {
+  border-radius: 20px;
+  border: 1px solid rgb(15, 147, 15);
+  padding: 12px 20px;
+  margin: 8px 0;
+  background-color: rgb(15, 147, 15);
+  color: antiquewhite;
+  font-weight: bolder;
+  cursor: pointer;
+}
