@@ -1,16 +1,20 @@
 <link rel="stylesheet" href="/style.css" />
+<% if (messages.error){messages.error }%>
+  <h1>Login</h1>
+  <form action="login" method="POST">
+    <div>
+      <label>
+        <p>Username</p>
+      </label>
+      <input type="text" id="name" />
+    </div>
+    <div>
+      <label>
+        <p>Password</p>
+      </label>
+      <input class="input" type="text" id="password" />
+    </div>
 
-<h1>Login</h1>
-<form action="login" method="POST">
-  <div>
-    <label><p>Username</p></label>
-    <input type="text" id="name" />
-  </div>
-  <div>
-    <label><p>Password</p></label>
-    <input class="input" type="text" id="password" />
-  </div>
-
-  <button type="submit">LOG IN</button>
-</form>
-<p>Not a user? <a href="/signup">Sign up</a></p>
+    <button type="submit">LOG IN</button>
+  </form>
+  <p>Not a user? <a href="/signup">Sign up</a></p>

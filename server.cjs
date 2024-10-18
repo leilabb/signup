@@ -51,7 +51,7 @@ app.post("/login", (req, res) => {
     {
       successRedirect: "/",
       failureRedirect: "/login",
-      failureFlash: true,
+      failureFlash: true, //display error messages that we wrote
     };
 });
 
