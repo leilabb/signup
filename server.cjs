@@ -11,11 +11,13 @@ const session = require("express-session");
 const initializePassport = require("./passport-config.cjs");
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static("public")); // Serves files from the public directory
-
 initializePassport(passport, (username) => {
   return users.find((user) => user.username === username);
 });
+
+app.use(express.static("public")); // Serves files from the public directory(styles)
+
+app.use(express.urlencoded({ extended: true }));
 
 const users = [];
 app.use(flash());
@@ -55,13 +57,23 @@ app.post("/login", (req, res) => {
     };
 });
 
-app.post("/signup", (req, res) => {
-  passport.authenticate("local"),
-    {
-      successRedirect: "/",
-      failureRedirect: "/signup",
-      failureFlash: true,
-    };
+app.post("/signup", async (req, res) => {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    //check if the fields are not empty before doing this. Also before storing them, do some validation.
+    // Ex: no 2 usernames should be the same
+    users.push({
+      id: Date().now.toString(),
+      username: req.body.username,
+      password: hashedPassword,
+    });
+
+    res.redirect("/login");
+  } catch (error) {
+    console.log(error);
+    res.redirect("/signup");
+  }
+  console.log(users);
 });
 
 app.listen(PORT, () => {
