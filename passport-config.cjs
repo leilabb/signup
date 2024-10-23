@@ -2,17 +2,18 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 
-function initialize(passport, getUserbyUsername) {
+function initialize(passport, getUserByUsername, getUserById) {
   const authenticateUser = async (username, password, done) => {
-    const user = getUserbyUsername(username);
+    //the parameters are form inputs!
+    const user = getUserByUsername(username);
     if (user === null) {
-      return done(null, false, { message: "No user found" });
+      return done(null, false, { message: "No user found with that name" });
     }
     try {
       if (await bcrypt.compare(password, user.password)) {
         return done(null, user);
       } else {
-        return done(null, false, { message: "Incorrect password" });
+        return done(null, false, { message: "Incorrect password." });
       }
     } catch (e) {
       return done(e);
@@ -24,14 +25,12 @@ function initialize(passport, getUserbyUsername) {
   );
 
   passport.serializeUser((user, done) => {
-    // Logic for serializing user
-    done(null, user.id); // Assuming the user object has an 'id' property
+    done(null, user.id);
   });
 
   passport.deserializeUser((id, done) => {
-    // Logic for deserializing user
     const user = getUserById(id); // Adjust this function to fetch the user by ID
-    done(null, user);
+    return done(null, user.id);
   });
 }
 

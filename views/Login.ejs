@@ -1,20 +1,24 @@
 <link rel="stylesheet" href="/style.css" />
-<% if (messages.error){messages.error }%>
-  <h1>Login</h1>
-  <form action="login" method="POST">
-    <div>
-      <label>
-        <p>Username</p>
-      </label>
-      <input type="text" name="name" id="name" />
-    </div>
-    <div>
-      <label>
-        <p>Password</p>
-      </label>
-      <input class="input" type="text" name="password" id="password" />
-    </div>
+<% if (messages.error) { %>
+  <p style="color: red;">
+    <%= messages.error %>
+  </p>
+  <% } %>
+    <h1>Login</h1>
+    <form action="/login" method="POST">
+      <div>
+        <label>
+          <p>Username</p>
+        </label>
+        <input type="text" name="username" id="username" />
+      </div>
+      <div>
+        <label>
+          <p>Password</p>
+        </label>
+        <input class="input" type="password" name="password" id="password" />
+      </div>
 
-    <button type="submit">LOG IN</button>
-  </form>
-  <p>Not a user? <a href="/signup">Sign up</a></p>
+      <button type="submit">LOG IN</button>
+    </form>
+    <p>Not a user? <a href="/signup">Sign up</a></p>

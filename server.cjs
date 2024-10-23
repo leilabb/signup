@@ -11,9 +11,18 @@ const session = require("express-session");
 const initializePassport = require("./passport-config.cjs");
 const PORT = process.env.PORT || 3000;
 
-initializePassport(passport, (username) => {
-  return users.find((user) => user.username === username);
-});
+//one call to the initialize function
+initializePassport(
+  passport,
+  (username) => {
+    const matchingUser = users.find((user) => user.username === username);
+    return matchingUser ? matchingUser : null;
+  },
+  (id) => {
+    const matchingUser = users.find((user) => user.id === id);
+    return matchingUser ? matchingUser : null;
+  }
+);
 
 app.use(express.static("public")); // Serves files from the public directory(styles)
 
@@ -37,33 +46,33 @@ app.set("view-engine", "ejs");
 //ROUTES
 
 app.get("/", (req, res) => {
-  res.render("login.ejs", { name: "Leila" });
+  res.render("home.ejs", { username: req.user.username });
+});
+
+app.get("/login", (req, res) => {
+  res.render("login.ejs");
 });
 
 app.get("/signup", (req, res) => {
   res.render("signup.ejs");
 });
 
-app.get("/loggedIn", (req, res) => {
-  res.render("loggedIn.ejs");
-});
-
-app.post("/login", (req, res) => {
-  passport.authenticate("local"),
-    {
-      successRedirect: "/",
-      failureRedirect: "/login",
-      failureFlash: true, //display error messages that we wrote
-    };
-});
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureFlash: true,
+  })
+);
 
 app.post("/signup", async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    //check if the fields are not empty before doing this. Also before storing them, do some validation.
-    // Ex: no 2 usernames should be the same
+    // Before storing them, do some validation. Ex: check if the fields are not empty before doing this,
+    // no 2 usernames should be the same
     users.push({
-      id: Date().now.toString(),
+      id: Date.now().toString(),
       username: req.body.username,
       password: hashedPassword,
     });
@@ -73,7 +82,7 @@ app.post("/signup", async (req, res) => {
     console.log(error);
     res.redirect("/signup");
   }
-  console.log(users);
+  console.log("All users", users);
 });
 
 app.listen(PORT, () => {
