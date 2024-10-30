@@ -45,20 +45,22 @@ app.set("view-engine", "ejs");
 
 //ROUTES
 
-app.get("/", (req, res) => {
+app.get("/", checkAuthenticated, (req, res) => {
+  console.log(req.user.username);
   res.render("home.ejs", { username: req.user.username });
 });
 
-app.get("/login", (req, res) => {
+app.get("/login", checkNotAuthenticated, (req, res) => {
   res.render("login.ejs");
 });
 
-app.get("/signup", (req, res) => {
+app.get("/signup", checkNotAuthenticated, (req, res) => {
   res.render("signup.ejs");
 });
 
 app.post(
   "/login",
+  checkNotAuthenticated,
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
@@ -66,7 +68,7 @@ app.post(
   })
 );
 
-app.post("/signup", async (req, res) => {
+app.post("/signup", checkNotAuthenticated, async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     // Before storing them, do some validation. Ex: check if the fields are not empty before doing this,
@@ -82,8 +84,23 @@ app.post("/signup", async (req, res) => {
     console.log(error);
     res.redirect("/signup");
   }
-  console.log("All users", users);
+  console.log("Registered users", users);
 });
+
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    res.redirect("/login");
+  }
+}
+
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect("/");
+  }
+  return next();
+}
 
 app.listen(PORT, () => {
   console.log(`Server started successfully on http://localhost:${PORT}`);
