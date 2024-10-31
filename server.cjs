@@ -84,7 +84,15 @@ app.post("/signup", checkNotAuthenticated, async (req, res) => {
     console.log(error);
     res.redirect("/signup");
   }
-  console.log("Registered users", users);
+});
+
+app.post("/logout", function (req, res, next) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 });
 
 function checkAuthenticated(req, res, next) {
