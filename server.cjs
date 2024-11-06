@@ -11,6 +11,10 @@ const session = require("express-session");
 const initializePassport = require("./passport-config.cjs");
 const PORT = process.env.PORT || 3000;
 
+const { connectToDb, client } = require("./db");
+
+connectToDb();
+
 //one call to the initialize function
 initializePassport(
   passport,
@@ -46,7 +50,6 @@ app.set("view-engine", "ejs");
 //ROUTES
 
 app.get("/", checkAuthenticated, (req, res) => {
-  console.log(req.user.username);
   res.render("home.ejs", { username: req.user.username });
 });
 
