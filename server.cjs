@@ -11,28 +11,45 @@ const session = require("express-session");
 const initializePassport = require("./passport-config.cjs");
 const PORT = process.env.PORT || 3000;
 
-const { connectToDb, client } = require("./db");
+const connectToDb = require("./db");
 
-connectToDb();
+async function initializeApp() {
+  const db = await connectToDb();
 
-//one call to the initialize function
-initializePassport(
-  passport,
-  (username) => {
-    const matchingUser = users.find((user) => user.username === username);
-    return matchingUser ? matchingUser : null;
-  },
-  (id) => {
-    const matchingUser = users.find((user) => user.id === id);
-    return matchingUser ? matchingUser : null;
-  }
-);
+  //one call to the initialize function
+  initializePassport(
+    passport,
+    async (username) => {
+      try {
+        const matchingUser = await db
+          .collection("users")
+          .findOne({ username: username });
+        console.log("User found:", matchingUser);
+        return matchingUser ? matchingUser : null;
+      } catch (error) {
+        console.log("Couldn't find user.");
+        throw error;
+      }
+    },
+    async (id) => {
+      try {
+        const matchingUser = await db.collection("users").findOne({ id: id });
+        console.log("User ID found:", matchingUser.id);
+        return matchingUser ? matchingUser : null;
+      } catch (error) {
+        console.log("Couldn't find user by id.");
+        throw error;
+      }
+    }
+  );
+}
 
-app.use(express.static("public")); // Serves files from the public directory(styles)
+initializeApp();
+
+app.use(express.static("public")); // Serves files from the public directory
 
 app.use(express.urlencoded({ extended: true }));
 
-const users = [];
 app.use(flash());
 app.use(
   session({
@@ -74,13 +91,15 @@ app.post(
 app.post("/signup", checkNotAuthenticated, async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    // Before storing them, do some validation. Ex: check if the fields are not empty before doing this,
-    // no 2 usernames should be the same
-    users.push({
+    const db = await connectToDb();
+
+    db.collection("users").insertOne({
       id: Date.now().toString(),
       username: req.body.username,
       password: hashedPassword,
     });
+
+    console.log("user ", req.body.username, "inserted");
 
     res.redirect("/login");
   } catch (error) {

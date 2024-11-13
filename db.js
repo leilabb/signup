@@ -16,18 +16,32 @@ const client = new MongoClient(uri, {
 
 async function connectToDb() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+    console.log("Connected to the database.");
+    return client.db("signup");
+  } catch (e) {
+    console.log("Failed to connect to the database: ", e);
+    throw e;
   }
 }
+
+// Before storing them, do some validation. Ex: check if the fields are not empty before doing this,
+// no 2 usernames should be the same
+// async function addUser(username, password) {
+//   try {
+//     await
+//   } catch (error) {}
+// }
+
+// async function updateUser(username, password) {
+//   try {
+//   } catch (error) {}
+// }
+
+// async function deleteUser(username, password) {
+//   try {
+//   } catch (error) {}
+// }
 //run().catch(console.dir);
 
-module.exports = { client, connectToDb };
+module.exports = connectToDb;
