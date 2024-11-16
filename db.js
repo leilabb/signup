@@ -3,7 +3,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const { MongoClient, ServerApiVersion } = require("mongodb");
-const uri = process.env.uri;
+const uri = `mongodb+srv://leilabenh:${process.env.MONGO_DB_PASSWORD}@signupcluster.mp5f9.mongodb.net/?retryWrites=true&w=majority&appName=SignupCluster`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
