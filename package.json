@@ -6,7 +6,8 @@
   "main": "server.cjs",
   "scripts": {
     "start": "node server.cjs",
-    "devStart": "nodemon server.cjs"
+    "devStart": "nodemon server.cjs",
+    "build": "npm install"
   },
   "keywords": [],
   "author": "",
