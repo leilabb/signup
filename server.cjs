@@ -9,6 +9,8 @@ const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 const initializePassport = require("./passport-config.cjs");
+const path = require("path");
+
 const PORT = process.env.PORT || 3000;
 
 const connectToDb = require("./db");
@@ -28,6 +30,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 async function initializeApp() {
