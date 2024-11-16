@@ -13,6 +13,23 @@ const PORT = process.env.PORT || 3000;
 
 const connectToDb = require("./db");
 
+app.use(express.static("public")); // Serves files from the public directory
+
+app.use(express.urlencoded({ extended: true }));
+
+app.use(flash());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.set("view engine", "ejs");
+
 async function initializeApp() {
   const db = await connectToDb();
 
@@ -45,24 +62,6 @@ async function initializeApp() {
 }
 
 initializeApp();
-
-app.use(express.static("public")); // Serves files from the public directory
-
-app.use(express.urlencoded({ extended: true }));
-
-app.use(flash());
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-  })
-);
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.set("view-engine", "ejs");
 
 //ROUTES
 
