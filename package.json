@@ -5,6 +5,7 @@
   "description": "",
   "main": "server.cjs",
   "scripts": {
+    "start": "node server.cjs",
     "devStart": "nodemon server.cjs"
   },
   "keywords": [],
