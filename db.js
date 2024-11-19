@@ -12,6 +12,7 @@ const client = new MongoClient(uri, {
     strict: true,
     deprecationErrors: true,
     ssl: true,
+    autoSelectFamily: false,
   },
 });
 
@@ -25,24 +26,5 @@ async function connectToDb() {
     throw e;
   }
 }
-
-// Before storing them, do some validation. Ex: check if the fields are not empty before doing this,
-// no 2 usernames should be the same
-// async function addUser(username, password) {
-//   try {
-//     await
-//   } catch (error) {}
-// }
-
-// async function updateUser(username, password) {
-//   try {
-//   } catch (error) {}
-// }
-
-// async function deleteUser(username, password) {
-//   try {
-//   } catch (error) {}
-// }
-//run().catch(console.dir);
 
 module.exports = connectToDb;

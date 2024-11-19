@@ -69,15 +69,15 @@ initializeApp();
 //ROUTES
 
 app.get("/", checkAuthenticated, (req, res) => {
-  res.render("home.ejs", { username: req.user.username });
+  res.render("home", { username: req.user.username });
 });
 
 app.get("/login", checkNotAuthenticated, (req, res) => {
-  res.render("login.ejs");
+  res.render("login");
 });
 
 app.get("/signup", checkNotAuthenticated, (req, res) => {
-  res.render("signup.ejs");
+  res.render("signup");
 });
 
 app.post(
