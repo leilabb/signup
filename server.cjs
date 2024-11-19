@@ -32,7 +32,16 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.set("views", path.join(__dirname, "views"));
+
+// Check if the app is running in production or development
+const viewsPath =
+  process.env.NODE_ENV === "production"
+    ? path.join(__dirname, "signup", "views") // Use the 'signup/views' path in production
+    : path.join(__dirname, "views"); // Use the 'views' path in development
+
+//app.set("views", path.join(__dirname, "views"));
+app.set("views", viewsPath);
+
 app.set("view engine", "ejs");
 
 async function initializeApp() {
@@ -69,7 +78,6 @@ async function initializeApp() {
 initializeApp();
 
 //ROUTES
-
 app.get("/", checkAuthenticated, (req, res) => {
   res.render("home.ejs", { username: req.user.username });
 });
