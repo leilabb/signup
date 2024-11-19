@@ -17,7 +17,7 @@ const connectToDb = require("./db");
 
 console.log("__dirname:", __dirname);
 
-app.use(express.static("public")); // Serves files from the public directory
+app.use(express.static("views")); // Serves files from the public directory
 
 app.use(express.urlencoded({ extended: true }));
 
