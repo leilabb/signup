@@ -75,7 +75,7 @@ app.get("/", checkAuthenticated, (req, res) => {
 });
 
 app.get("/login", checkNotAuthenticated, (req, res) => {
-  res.render(__dirname + "/views/login.ejs");
+  res.render("login.ejs");
 });
 
 app.get("/signup", checkNotAuthenticated, (req, res) => {
