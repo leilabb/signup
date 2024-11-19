@@ -39,6 +39,8 @@ const viewsPath =
     ? path.join(__dirname, "signup", "views") // Use the 'signup/views' path in production
     : path.join(__dirname, "views"); // Use the 'views' path in development
 
+console.log("VIEWSPATH", viewsPath);
+
 //app.set("views", path.join(__dirname, "views"));
 app.set("views", viewsPath);
 
