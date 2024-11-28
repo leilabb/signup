@@ -43,12 +43,6 @@ app.set("views", viewsPath);
 
 app.set("view engine", "ejs");
 
-app.get("/debug", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "login.ejs"));
-});
-
-app.get("/test", (req, res) => res.render("login"));
-
 async function initializeApp() {
   const db = await connectToDb();
 
@@ -93,6 +87,14 @@ app.get("/login", checkNotAuthenticated, (req, res) => {
 
 app.get("/signup", checkNotAuthenticated, (req, res) => {
   res.render("signup.ejs");
+});
+
+app.get("/list-views", (req, res) => {
+  const fs = require("fs");
+  fs.readdir(viewsPath, (err, files) => {
+    if (err) res.status(500).send("Error reading views: " + err.message);
+    else res.send("Files in views: " + files.join(", "));
+  });
 });
 
 app.post(
