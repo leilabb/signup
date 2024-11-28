@@ -82,7 +82,7 @@ app.get("/", checkAuthenticated, (req, res) => {
 });
 
 app.get("/login", checkNotAuthenticated, (req, res) => {
-  res.render("signup.ejs");
+  res.render("login.ejs");
 });
 
 app.get("/signup", checkNotAuthenticated, (req, res) => {
