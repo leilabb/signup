@@ -78,7 +78,7 @@ initializeApp();
 
 //ROUTES
 app.get("/", checkAuthenticated, (req, res) => {
-  res.render("home.ejs", { username: req.user.username });
+  res.render("Home.ejs", { username: req.user.username });
 });
 
 app.get("/login", checkNotAuthenticated, (req, res) => {
@@ -86,7 +86,7 @@ app.get("/login", checkNotAuthenticated, (req, res) => {
 });
 
 app.get("/signup", checkNotAuthenticated, (req, res) => {
-  res.render("signup.ejs");
+  res.render("Signup.ejs");
 });
 
 app.get("/list-views", (req, res) => {
