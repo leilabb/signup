@@ -34,10 +34,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Check if the app is running in production or development
-const viewsPath =
-  process.env.NODE_ENV === "production"
-    ? path.join(__dirname, "signup", "views") // Use the 'signup/views' path in production
-    : path.join(__dirname, "views"); // Use the 'views' path in development
+const viewsPath = path.join(__dirname, "views"); // Use the 'views' path in development
 
 console.log("VIEWSPATH", viewsPath);
 
@@ -45,6 +42,12 @@ console.log("VIEWSPATH", viewsPath);
 app.set("views", viewsPath);
 
 app.set("view engine", "ejs");
+
+app.get("/debug", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "login.ejs"));
+});
+
+app.get("/test", (req, res) => res.render("login"));
 
 async function initializeApp() {
   const db = await connectToDb();
