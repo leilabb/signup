@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.cjs",
     "devStart": "nodemon server.cjs",
-    "build": "npm install"
+    "build": "npm install && echo 'Listing project files:' && ls -al"
   },
   "keywords": [],
   "author": "",
