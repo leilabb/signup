@@ -14,6 +14,9 @@
     align-items: center;
     justify-content: center;
   }
+  .deleteuser {
+    width: 100%;
+  }
 }
 
 * {
@@ -46,4 +49,18 @@ button {
   color: antiquewhite;
   font-weight: bolder;
   cursor: pointer;
+}
+
+.username {
+  color: brown;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-style: italic;
+}
+
+.deleteuser {
+  background-color: brown;
+  border: 1px solid brown;
+  color: white;
+  margin: 4px;
+  padding: 6px;
 }

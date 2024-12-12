@@ -58,7 +58,6 @@ async function initializeApp() {
     async (id) => {
       try {
         const matchingUser = await db.collection("users").findOne({ id: id });
-        console.log("User ID found:", matchingUser.id);
         return matchingUser ? matchingUser : null;
       } catch (error) {
         console.log("Couldn't find user by id.");
@@ -110,6 +109,19 @@ app.post("/signup", checkNotAuthenticated, async (req, res) => {
   } catch (error) {
     console.log(error);
     res.redirect("/signup");
+  }
+});
+
+app.post("/deleteuser", checkAuthenticated, async (req, res) => {
+  try {
+    const db = await connectToDb();
+    await db.collection("users").deleteOne({ id: req.user.id });
+    console.log("User " + req.user.username + " deleted");
+    res.redirect("/login");
+  } catch (error) {
+    console.log("Couldn't delete user");
+    res.redirect("/signup"); //lägg till en sida deleteuser som bara skriver "delted user success" och redirectar till signup
+    throw error;
   }
 });
 

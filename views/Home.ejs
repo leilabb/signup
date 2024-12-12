@@ -1,5 +1,14 @@
 <link rel="stylesheet" href="/style.css" />
-<h2>You're logged in <%= username %>!</h2>
+<h2>You're logged in
+    <span class="username">
+        <%=username %>!
+    </span>
+
+</h2>
+
+<form action="/deleteuser" method="POST">
+    <button class="deleteuser" type="submit">Delete user</button>
+</form>
 <form action="/logout" method="POST">
     <button type="submit">LOG OUT</button>
 </form>
