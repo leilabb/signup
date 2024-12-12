@@ -1,27 +1,38 @@
-<link rel="stylesheet" href="/style.css" />
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="center">
-    <% if (messages.error) { %>
-        <p style="color: red;">
-            <%= messages.error %>
-        </p>
-        <% } %>
-            <h1>Login</h1>
-            <form action="/login" method="POST">
-                <div>
-                    <label>
-                        <p>Username</p>
-                    </label>
-                    <input class="input" type="text" name="username" id="username" />
-                </div>
-                <div>
-                    <label>
-                        <p>Password</p>
-                    </label>
-                    <input class="input" type="password" name="password" id="password" />
-                </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/style.css" />
+</head>
 
-                <button class="button" type="submit">LOG IN</button>
-            </form>
-            <p>Not a user? <a href="/signup">Sign up</a></p>
-</div>
+<body>
+    <div class="center">
+        <% if (messages.error) { %>
+            <p style="color: red;">
+                <%= messages.error %>
+            </p>
+            <% } %>
+                <h1>Login</h1>
+                <form action="/login" method="POST">
+                    <div>
+                        <label>
+                            <p>Username</p>
+                        </label>
+                        <input class="input" type="text" name="username" id="username" />
+                    </div>
+                    <div>
+                        <label>
+                            <p>Password</p>
+                        </label>
+                        <input class="input" type="password" name="password" id="password" />
+                    </div>
+                    <button class="button" type="submit">LOG IN</button>
+                </form>
+                <p>Not a user? <a href="/signup">Sign up</a></p>
+    </div>
+</body>
+
+</html>
