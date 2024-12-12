@@ -1,6 +1,4 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
+require("dotenv").config();
 
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const uri = `mongodb+srv://leilabenh:${process.env.MONGO_DB_PASSWORD}@signupcluster.mp5f9.mongodb.net/?retryWrites=true&w=majority&appName=SignupCluster`;

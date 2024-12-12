@@ -15,8 +15,6 @@ const PORT = process.env.PORT || 3000;
 
 const connectToDb = require("./db");
 
-console.log("__dirname:", __dirname);
-
 app.use(express.static("public")); // Serves files from the public directory
 
 app.use(express.urlencoded({ extended: true }));
@@ -33,12 +31,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Check if the app is running in production or development
-const viewsPath = path.join(__dirname, "views"); // Use the 'views' path in development
+const viewsPath = path.join(__dirname, "views");
 
-console.log("VIEWSPATH", viewsPath);
-
-//app.set("views", path.join(__dirname, "views"));
 app.set("views", viewsPath);
 
 app.set("view engine", "ejs");
@@ -87,14 +81,6 @@ app.get("/login", checkNotAuthenticated, (req, res) => {
 
 app.get("/signup", checkNotAuthenticated, (req, res) => {
   res.render("Signup.ejs");
-});
-
-app.get("/list-views", (req, res) => {
-  const fs = require("fs");
-  fs.readdir(viewsPath, (err, files) => {
-    if (err) res.status(500).send("Error reading views: " + err.message);
-    else res.send("Files in views: " + files.join(", "));
-  });
 });
 
 app.post(
