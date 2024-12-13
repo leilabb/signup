@@ -1,6 +1,4 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
+require("dotenv").config();
 
 const express = require("express");
 const app = express();
@@ -37,7 +35,6 @@ app.use(passport.session());
 const viewsPath = path.join(__dirname, "views");
 
 app.set("views", viewsPath);
-
 app.set("view engine", "ejs");
 
 async function initializeApp() {
@@ -85,6 +82,10 @@ app.get("/signup", checkNotAuthenticated, (req, res) => {
   res.render("Signup.ejs");
 });
 
+app.get("/DeleteSuccess", checkNotAuthenticated, (req, res) => {
+  res.render("DeleteSuccess.ejs");
+});
+
 app.post(
   "/login",
   checkNotAuthenticated,
@@ -119,10 +120,10 @@ app.post("/deleteuser", checkAuthenticated, async (req, res) => {
   try {
     const db = await connectToDb();
     await db.collection("users").deleteOne({ id: req.user.id });
-    res.redirect("/login");
+    res.render("DeleteSuccess.ejs");
   } catch (error) {
     console.log("Couldn't delete user");
-    res.redirect("/signup"); //lägg till en sida deleteuser som bara skriver "delted user success" och redirectar till signup
+    res.redirect("/login");
     throw error;
   }
 });
