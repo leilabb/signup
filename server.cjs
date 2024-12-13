@@ -10,10 +10,13 @@ const flash = require("express-flash");
 const session = require("express-session");
 const initializePassport = require("./passport-config.cjs");
 const path = require("path");
+const layoutExpress = require("express-ejs-layouts");
 
 const PORT = process.env.PORT || 3000;
 
 const connectToDb = require("./db");
+
+app.use(layoutExpress);
 
 app.use(express.static("public")); // Serves files from the public directory
 
@@ -116,7 +119,6 @@ app.post("/deleteuser", checkAuthenticated, async (req, res) => {
   try {
     const db = await connectToDb();
     await db.collection("users").deleteOne({ id: req.user.id });
-    console.log("User " + req.user.username + " deleted");
     res.redirect("/login");
   } catch (error) {
     console.log("Couldn't delete user");
