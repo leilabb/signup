@@ -9,8 +9,8 @@ Render
 
 Functions:
 <ul>
-  <li>Signup page.</li>
-  <li>Login page.</li>
+  <li>Signup page - sign up to the database.</li>
+  <li>Login page - log in with your credentials.</li>
   <li>Logged in page.</li>
   <li>Logged out page.</li>
   <li>Error message when login credentials are wrong or login credentials missing.</li>
