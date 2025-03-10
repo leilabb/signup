@@ -51,6 +51,17 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  border: 1px solid gray;
+  background-color: gray;
+  border-radius: 20px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  color: antiquewhite;
+  font-weight: bolder;
+  cursor: not-allowed;
+}
+
 .username {
   color: brown;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
