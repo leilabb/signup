@@ -1,4 +1,7 @@
 # signup
+To fix:
+Refactor
+Unique ID
 
 Stack:
 <ul><li>Node.js</li>
