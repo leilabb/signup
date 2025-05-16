@@ -21,6 +21,7 @@ app.use(express.static("public")); // Serves files from the public directory
 app.use(express.urlencoded({ extended: true }));
 
 app.use(flash());
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -40,7 +41,7 @@ app.set("view engine", "ejs");
 async function initializeApp() {
   const db = await connectToDb();
 
-  //one call to the initialize function
+  //refactor with helper functions
   initializePassport(
     passport,
     async (username) => {
@@ -48,7 +49,6 @@ async function initializeApp() {
         const matchingUser = await db
           .collection("users")
           .findOne({ username: username });
-        console.log("User found:", matchingUser);
         return matchingUser ? matchingUser : null;
       } catch (error) {
         console.log("Couldn't find user.");
@@ -107,7 +107,7 @@ app.post("/signup", checkNotAuthenticated, async (req, res) => {
       password: hashedPassword,
     });
 
-    console.log("user ", req.body.username, "inserted");
+    console.log("user inserted");
 
     res.redirect("/login");
   } catch (error) {

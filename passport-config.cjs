@@ -3,8 +3,8 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 
 function initialize(passport, getUserByUsername, getUserById) {
+  //the parameters are form inputs
   const authenticateUser = async (username, password, done) => {
-    //the parameters are form inputs
     const user = await getUserByUsername(username);
     if (user === null) {
       return done(null, false, { message: "No user found with that name" });
@@ -24,10 +24,12 @@ function initialize(passport, getUserByUsername, getUserById) {
     new LocalStrategy({ usernameField: "username" }, authenticateUser)
   );
 
+  //session storage
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });
 
+  //
   passport.deserializeUser(async (id, done) => {
     const user = await getUserById(id);
     return done(null, user);
