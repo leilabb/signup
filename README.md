@@ -1,7 +1,15 @@
 # signup
 To fix:
-Refactor <br>
-Unique ID
+<ul>
+  <li>
+    Refactor
+  </li>
+  <li>Unique ID
+</li>
+  <li>Input validation
+</li>
+</ul>
+ 
 
 Stack:
 <ul><li>Node.js</li>
